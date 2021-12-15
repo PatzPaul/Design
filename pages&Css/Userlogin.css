@@ -11,6 +11,8 @@
     background-attachment: fixed;
     background-color: tomato;
     background-image: repeating-linear-gradient(lime,tomato,yellow);
+    box-sizing: border-box;
+    border-radius: 5%;
 }
 .signup{
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
@@ -19,7 +21,8 @@
     left: 600px;
 }
 body{
-    background-color: springgreen;
+    background-color: yellowgreen;
+    background-image: repeating-linear-gradient(springgreen,yellow,yellowgreen);
     font-size: 40px;
     position: fixed;
 }

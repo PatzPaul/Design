@@ -1,0 +1,30 @@
+body{
+    padding-left: 10pc;
+    background-color: yellowgreen;
+    background-image: repeating-radial-gradient(springgreen,yellow,yellowgreen);
+}
+
+
+}
+header{
+
+}
+footer{
+
+}
+.container{
+    position: relative;
+    text-align: center;
+    text-decoration: skyblue;
+}
+.container-content{
+    position: relative;
+    left: 200px;
+    width: 800px;
+    padding-bottom: 40px;
+    background-attachment: fixed;
+    background-color: tomato;
+    background-image: repeating-linear-gradient(lime,tomato,yellow);
+    box-sizing: border-box;
+    border-radius: 5%;
+}
