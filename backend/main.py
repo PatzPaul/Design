@@ -42,7 +42,7 @@ class HelloResource(Resource):
 
 
 @api.route('/recipes')
-class  RecipeResource(Resource):
+class  RecipesResource(Resource):
 
     """
     A resource class that handles the various http'recipes' endpoint.
@@ -53,6 +53,21 @@ class  RecipeResource(Resource):
 
     def post(self):
         """create a new recipe"""
+        pass
+
+@api.route('/recipe/<int:id>')
+class RecipeResource(Resource):
+    def get(self,id):
+        """get a recipe by id"""
+        pass
+
+    def put(self,id):
+        """update a recipe by id"""
+        pass
+    def delete(self,id):
+        """delete a recipe by id"""
+        pass
+
 
 
 
