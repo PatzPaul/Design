@@ -3,16 +3,20 @@ This module contains the Flask application for our project.
 """
 
 
-from flask import Flask
+from flask import Flask , request
 from flask_restx import Api, Resource, fields
 from config import DevConfig
 from models import Recipe
 from exts import db
+from flask_migrate import Migrate
 
 app = Flask(__name__)
 app.config.from_object(DevConfig)
 
 db.init_app(app)
+
+
+migrate=Migrate(app,db)
 
 api = Api(doc='/docs', app=app)
 
@@ -43,30 +47,54 @@ class HelloResource(Resource):
 
 @api.route('/recipes')
 class  RecipesResource(Resource):
-
     """
     A resource class that handles the various http'recipes' endpoint.
     """
+    @api.marshal_list_with(recipe_model)
     def get(self):
         """get all recipes"""
-        pass
+        recipes=Recipe.query.all()
 
+        return recipes
+
+    @api.marshal_with(recipe_model)
     def post(self):
         """create a new recipe"""
-        pass
+        data = request.get_json()
+
+        new_recipe=Recipe(
+            title=data.get('title'),
+            description=data.get('description')
+        )
+        new_recipe.save()
+        return new_recipe,201
 
 @api.route('/recipe/<int:id>')
 class RecipeResource(Resource):
     def get(self,id):
         """get a recipe by id"""
-        pass
+        recipe=Recipe.query.get_or_404(id)
 
+        return recipe
+
+    @api.marshal_with(recipe_model)
     def put(self,id):
         """update a recipe by id"""
-        pass
+        
+        recipe_to_update=Recipe.query.get_or_404(id)
+
+        data = request.json()
+
+        recipe_to_update.update(data.get(''),data.get('description'))
+
+        return recipe_to_update
+
+    @api.marshal_with(recipe_model)
     def delete(self,id):
         """delete a recipe by id"""
-        pass
+        recipe_to_delete =Recipe.query.get_or_404(id)
+
+        return recipe_to_delete
 
 
 
@@ -82,3 +110,4 @@ def make_shell_context():
 
 if __name__ == '__main__':
     app.run()
+
