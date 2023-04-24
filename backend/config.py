@@ -39,4 +39,6 @@ class TestConfig(Config):
     """
     Test environment configuration settings
     """
-    pass
+    SQLALCHEMY_DATABASE_URI='sqlite:///test.db'
+    SQLALCHEMY_ECHO=False
+    TESTING = True
