@@ -18,9 +18,24 @@ class APITestCase(unittest.TestCase):
       hello_response = self.client.get('/recipe/hello')
 
       json = hello_response.json
-      print(json)
+      # print(json)
 
       self.assertEqual(json, {"message": "Hello World"})
+
+    def test_signup(self):
+        # first signup should succeed
+        signup_response=self.client.post('/auth/signup',
+            json={"username":"testuser","email":"testuser@test.com","password":"password"}
+        )
+        status_code=signup_response.status_code
+        self.assertEqual(status_code, 201)
+
+        # second signup should fail with 400 status code
+        signup_response=self.client.post('/auth/signup',
+            json={"username":"testuser","email":"testuser@test.com","password":"password"}
+        )
+        status_code=signup_response.status_code
+        self.assertEqual(status_code, 400)
 
 
 

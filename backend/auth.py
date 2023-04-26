@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, make_response
 from flask_restx import Resource, Namespace, fields
 from models import User , db
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -35,11 +35,19 @@ class Signup(Resource):
         data = request.get_json()
 
         username = data.get('username')
+        email = data.get('email')
+        password = data.get('password')
 
         db_user = User.query.filter_by(username=username).first()
 
         if db_user is not None:
-            return jsonify({"message": f"User with username {username} already exists"})
+            return make_response(jsonify({"message": f"User with username {username} already exists"}), 400)
+
+        new_user = User(username=username, email=email, password=generate_password_hash(password))
+        db.session.add(new_user)
+        db.session.commit()
+
+        return make_response(jsonify({"message": "User created successfully"}), 201)
 
 @auth_ns.route('/login')
 class Login(Resource):
