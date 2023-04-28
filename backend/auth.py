@@ -1,71 +1,67 @@
 from flask import Flask, request, jsonify, make_response
 from flask_restx import Resource, Namespace, fields
-from models import User , db
+from models import User, db
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_jwt_extended import JWTManager,create_access_token,create_refresh_token,jwt_required
+from flask_jwt_extended import JWTManager, create_access_token, create_refresh_token, jwt_required
 
 
-auth_ns=Namespace('auth',description="A namespace for our Authentification")
+auth_ns = Namespace('auth')
 
 
-
-signup_model =auth_ns.model(
-    'SignUp',
-    {
-        "username": fields.String(),
-        "email": fields.String(),
-        "password": fields.String()
-    }
-)
-
-login_model= auth_ns.model(
-    'Login',
-    {
-    'username':fields.String(),
-    'password':fields.String()
-    }
-)
+user_model = auth_ns.model('user', {
+    'username': fields.String(required=True),
+    'password': fields.String(required=True),
+})
 
 
-@auth_ns.route('/signup')
-class Signup(Resource):
-    auth_ns.expect(signup_model)
+@auth_ns.route('/register')
+class Register(Resource):
+    @auth_ns.expect(user_model)
     def post(self):
-        """User account sign up"""
-        data = request.get_json()
+        data = request.json
+        if not data:
+            return {'message': 'No input data provided'}, 400
 
-        username = data.get('username')
         email = data.get('email')
         password = data.get('password')
+        if not email:
+            return {'message': 'Email is required'}, 400
+        if not password:
+            return {'message': 'Password is required'}, 400
 
-        db_user = User.query.filter_by(username=username).first()
+        user = User.query.filter_by(email=email).first()
+        if user:
+            return {'message': 'User already exists'}, 400
 
-        if db_user is not None:
-            return make_response(jsonify({"message": f"User with username {username} already exists"}), 400)
-
-        new_user = User(username=username, email=email, password=generate_password_hash(password))
+        new_user = User(email=email, password=password)
         db.session.add(new_user)
         db.session.commit()
 
-        return make_response(jsonify({"message": "User created successfully"}), 201)
+        return {'message': 'User created successfully'}, 201
+
 
 @auth_ns.route('/login')
 class Login(Resource):
-    auth_ns.expect(login_model)
+    @auth_ns.expect(user_model)
     def post(self):
-        """User authentication when logging in"""
-        data=request.get_json()
+        username = request.json.get('username')
+        password = request.json.get('password')
 
-        username=data.get('username')
-        password=data.get('password')
-        
-        db_user=User.query.filter_by(username=username).first()
+        if not username:
+            return {'message': 'username is required'}, 400
+        if not password:
+            return {'message': 'password is required'}, 400
 
-        if db.user and check_password_hash(db_user.password, password ):
+        user = User.query.filter_by(username=username).first()
 
-            access_token=create_access_token(identity=db.user.username)
-            refresh_token=create_refresh_token(identity=db.user.username)
+        if not user or not check_password_hash(user.password, password):
+            return {'message': 'invalid credentials'}, 401
 
-            return jsonify (
-                {"access token":access_token,"refresh token":refresh_token}
-            )
+        access_token = create_access_token(identity=user.username)
+        refresh_token = create_refresh_token(identity=user.username)
+
+        return {
+            'message': 'login successful',
+            'access_token': access_token,
+            'refresh_token': refresh_token
+        }, 200
