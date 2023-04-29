@@ -1,25 +1,37 @@
-import React,{useEffect,useState} from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import React from 'react';
 import ReactDOM from 'react-dom';
+import NavBar from './components/Navbar';
+import CreateRecipePage from './components/CreateRecipe';
+import LoginPage from './components/Login';
+import SignUpPage from './components/SignUp'
+import HomePage from './components/Home';
+
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+
 
 const App=()=>{
 
-  useEffect(
-    ()=>{
-      fetch('/recipe/hello')
-      .then(response=>response.json())
-      .then(data=>{console.log(data)
-      
-        setMessage(data.message)
-      })
-      .catch(err=>console.log(err))
-    },[]
-  )
-
-  const [message,setMessage]=useState('')
   return (
-    <div className="app">
-      {message}
-      </div>
+    <Router>
+    <div className="container">
+      <NavBar/>
+      <Switch>
+        <Route path="/create_recipe">
+          <CreateRecipePage/>
+        </Route>
+        <Route path="/login">
+          <LoginPage/>
+        </Route>
+        <Route path="/signup">
+          <SignUpPage/>
+        </Route>
+        <Route path="/">
+          <HomePage/>
+        </Route>
+      </Switch>
+    </div>
+    </Router>
   )
 }
 
