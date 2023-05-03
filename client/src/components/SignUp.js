@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
-import {Link} from 'react-router-dom';
-import {useForm} from 'react-hook-form';
+import { Link } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
 
 
 const SignUpPage = () => {
@@ -10,20 +10,12 @@ const SignUpPage = () => {
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
 
-  const {register,watch, handleSubmit,formState:{errors}}=useForm();
+  const { register, watch, handleSubmit, formState: { errors } } = useForm();
 
-  const submitForm = () => {
-    console.log("form submitted succesfully");
-    console.log(username);
-    console.log(email);
-    console.log(password);
-    console.log(confirmPassword);
-
-    setUsername('')
-    setEmail('')
-    setPassword('')
-    setConfirmPassword('')
+  const submitForm = (data) => {
+    console.log(data);
   }
+  console.log(watch("username"));
   return (
     <div className="container">
       <div className="form">
@@ -36,9 +28,7 @@ const SignUpPage = () => {
               Username
             </Form.Label>
             <Form.Control type="text" placeholder="Your Username"
-              value={username}
-              name="username"
-              onChange={(e) => { setUsername(e.target.value) }}
+              {...register("username", { required: true, maxLength: 25 })}
             />
           </Form.Group>
           <br></br>
@@ -47,9 +37,7 @@ const SignUpPage = () => {
               Email
             </Form.Label>
             <Form.Control type="email" placeholder="Your Email"
-              value={email}
-              name="email"
-              onChange={(e) => { setEmail(e.target.value) }}
+              {...register("email", { required: true, maxLength: 80 })}
             />
           </Form.Group>
           <br></br>
@@ -58,9 +46,7 @@ const SignUpPage = () => {
               Password
             </Form.Label>
             <Form.Control type="password" placeholder="Your Password"
-              value={password}
-              name="password"
-              onChange={(e) => { setPassword(e.target.value) }}
+              {...register("password", { required: true, minLength: 8 })}
             />
           </Form.Group>
           <br></br>
@@ -69,19 +55,17 @@ const SignUpPage = () => {
               Confirm Password
             </Form.Label>
             <Form.Control type="password" placeholder="Confirm password"
-              value={confirmPassword}
-              name="ConfirmPassword"
-              onChange={(e) => { setConfirmPassword(e.target.value) }}
+              {...register("confirmPassword", { required: true, minLength: 8 })}
             />
           </Form.Group>
           <br></br>
           <Form.Group>
-            <Button as="sub" variant="primary" onClick={submitForm}>SignUp</Button>
+            <Button as="sub" variant="primary" onClick={handleSubmit(submitForm)}>SignUp</Button>
           </Form.Group>
-        <Form.Group>
-          <small>Already have an Account?<Link to="/login">Hop In</Link></small>
-        </Form.Group>
-        <br></br>
+          <Form.Group>
+            <small>Already have an Account?<Link to="/login">Hop In</Link></small>
+          </Form.Group>
+          <br></br>
 
         </form>
       </div>
