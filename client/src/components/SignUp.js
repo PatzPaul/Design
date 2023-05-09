@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
@@ -9,6 +9,19 @@ const SignUpPage = () => {
 
   const { register, watch, handleSubmit, formState: { errors }, reset } = useForm();
   const [show, setShow] = useState(true);
+  const [serverResponse,setServerResponse]=useState('')
+
+
+  useEffect(() => {
+    const now = new Date();
+    const start = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 9, 0, 0); // 9:00 AM
+    const end = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 17, 0, 0); // 5:00 PM
+    if (now.getTime() >= start.getTime() && now.getTime() <= end.getTime()) {
+      setShow(true);
+    } else {
+      setShow(false);
+    }
+  }, []);
 
   const submitForm = (data) => {
     if (data.password === data.confirmPassword) {
@@ -28,7 +41,14 @@ const SignUpPage = () => {
 
       fetch('/auth.signup', requestOptions)
         .then(res => res.json())
-        .then(data => console.log(data))
+        .then(data => {
+          setServerResponse(data.message)
+          console.log(serverResponse)
+
+          setShow(true);
+          
+
+        })
         .catch(err => console.log(err))
 
       reset()
@@ -36,20 +56,23 @@ const SignUpPage = () => {
       alert("Passwords do not match")
     }
   }
-  console.log(watch("username"));
+
   return (
     <div className="container">
       <div className="form">
+        {show ?
+          <>
+            <Alert variant="success" onClose={() => setShow(false)} dismissible>
+              <p>
+                {serverResponse}
+              </p>
+            </Alert>
+            <h1 className='heading'>Welcome to YummyRecipes</h1>
+          </>
+          :
+          <h1 className='heading'>Sign Up Here!</h1>
+        }
         <img className="logo-container" src={hotDogIcon} alt='logo' />
-        <h1 className='heading'>Welcome to YummyRecipes</h1>
-        <Alert variant="danger" onClose={() => setShow(false)} dismissible>
-          <Alert.Heading>Oh snap! You got an error!</Alert.Heading>
-          <p>
-            Change this and that and try again. Duis mollis, est non commodo
-            luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.
-            Cras mattis consectetur purus sit amet fermentum.
-          </p>
-        </Alert>
         <h2>Create a New Account</h2>
         <p>Its Quick and Easy</p>
         <form>
@@ -102,6 +125,7 @@ const SignUpPage = () => {
           <Form.Group>
             <Button as="sub" variant="primary" onClick={handleSubmit(submitForm)}>SignUp</Button>
           </Form.Group>
+          <br></br>
           <Form.Group>
             <small>Already have an Account?<Link to="/login"> Come on In!</Link></small>
           </Form.Group>
