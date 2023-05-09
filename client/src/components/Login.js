@@ -2,6 +2,7 @@ import React,{useState} from 'react';
 import {Form,Button} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import {useForm} from 'react-hook-form';
+import hotDogIcon from './images/hot-dog-icon.png';
 
 
 const LoginPage=()=>{
@@ -20,7 +21,8 @@ const LoginPage=()=>{
   return(
     <div className="container">
     <div className="form">
-      <h1>Step Into The World Of Exquisite Taste</h1>
+    <img className="logo-container" src={hotDogIcon} alt='logo' />
+      <h1 className='heading'>Step Into The World Of Exquisite Taste</h1>
       <form>
         <Form.Group>
           <Form.Label>
