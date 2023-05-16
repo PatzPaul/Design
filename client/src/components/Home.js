@@ -1,9 +1,20 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import hotDogIcon from './images/hot-dog-icon.png';
+import { useAuth } from '../auth';
+
+const LoggedInHome=()=>{
+  return(
+      <div className="recipes">
+        <img className="logo-container" src={hotDogIcon} alt='logo' />
+        <h1 className="heading">Recipes List</h1>
+        </div>
+        )
 
 
-const HomePage=()=>{
+}
+
+const LoggedOutHome=()=>{
   return(
     <div className="home container">
       <img className="logo-container" src={hotDogIcon} alt='logo' />
@@ -12,6 +23,17 @@ const HomePage=()=>{
       <p>All In One Place</p>
       <Link to="/signup"  className="btn btn-primary btn-lg">Want to Get Started?</Link>
       </div>
+  )
+}
+
+
+const HomePage=()=>{
+
+  const [logged]=useAuth();
+  return(
+    <div>
+    logged? <LoggedInHome /> : <LoggedOutHome />
+    </div>
   )
 }
 

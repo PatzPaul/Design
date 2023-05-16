@@ -3,21 +3,42 @@ import {Form,Button} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 import {useForm} from 'react-hook-form';
 import hotDogIcon from './images/hot-dog-icon.png';
+import { login } from '../auth';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
 
 
 const LoginPage=()=>{
 
-  const [username,setUsername]=useState('')
-  const [password,setPassword]=useState('')
+  const {register,handleSubmit,watch,reset,formState:{errors}}=useForm()
 
-  const loginUser=()=>{
-    console.log(username);
-    console.log(password);
+  const history=useHistory()
 
-    setUsername('')
-    setPassword('')
 
+  const loginUser=(data)=>{
+    
+    console.log(data)
+
+    const requestOptions = {
+      method: "POST",
+      headers: {
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify(body)
+    }
+
+    fetch('/auth.login', requestOptions)
+        .then(res => res.json())
+        .then(data => {
+          console.log(data.access_token)
+          login(data.access_token)
+          history.push('/')
+
+        })
+
+    reset()
   }
+
+
   return(
     <div className="container">
     <div className="form">
@@ -29,25 +50,25 @@ const LoginPage=()=>{
             Username
           </Form.Label>
           <Form.Control type="text" placeholder="Your Username"
-            value={username}
-            name="username"
-            onChange={(e) => { setUsername(e.target.value) }}
+            {...register('username',{required:true,maxLength:25})}
           />
         </Form.Group>
+        {errors.username && <p style={{color:'red'}}><small>Username is required</small></p>}
+        {errors.username?.type === "maxLength" && <p style={{color:'red'}}><small>Username should be twentyfive or less characters</small></p>}
         <br></br>
         <Form.Group>
           <Form.Label>
             Password
           </Form.Label>
           <Form.Control type="password" placeholder="Your Password"
-            value={password}
-            name="password"
-            onChange={(e) => { setPassword(e.target.value) }}
+            {...register('password',{required:true,minLength:8})}
           />
         </Form.Group>
+        {errors.password && <p style={{color:'red'}}><small>Password is required</small></p>}
+        {errors.password?.type === "minLength" && <p style={{color:'red'}}><small>Password should be more than 8 characters</small></p>}
         <br></br>
         <Form.Group>
-          <Button as="sub" variant="primary" onClick={loginUser}>Log In</Button>
+          <Button as="sub" variant="primary" onClick={handleSubmit(loginUser)}>Log In</Button>
         </Form.Group>
         <Form.Group>
           <small>Don't have an Account?<Link to="/signup">Join us</Link></small>
