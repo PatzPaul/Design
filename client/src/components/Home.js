@@ -30,9 +30,10 @@ const LoggedOutHome=()=>{
 const HomePage=()=>{
 
   const [logged]=useAuth();
+
   return(
     <div>
-    logged? <LoggedInHome /> : <LoggedOutHome />
+    {logged? <LoggedInHome /> : <LoggedOutHome />}
     </div>
   )
 }
