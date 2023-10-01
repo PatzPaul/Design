@@ -17,6 +17,12 @@ const LoginPage=()=>{
   const loginUser=(data)=>{
     
     console.log(data)
+    
+    
+    const body = {
+      username: data.username,
+      email: data.email
+    }
 
     const requestOptions = {
       method: "POST",

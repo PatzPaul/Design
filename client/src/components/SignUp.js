@@ -9,7 +9,7 @@ const SignUpPage = () => {
 
   const { register, watch, handleSubmit, formState: { errors }, reset } = useForm();
   const [show, setShow] = useState(true);
-  const [serverResponse,setServerResponse]=useState('')
+  const [serverResponse, setServerResponse] = useState('')
 
 
   useEffect(() => {
@@ -39,14 +39,14 @@ const SignUpPage = () => {
         body: JSON.stringify(body)
       }
 
-      fetch('/auth.signup', requestOptions)
+      fetch('/signup', requestOptions)
         .then(res => res.json())
         .then(data => {
           setServerResponse(data.message)
           console.log(serverResponse)
 
           setShow(true);
-          
+
 
         })
         .catch(err => console.log(err))
