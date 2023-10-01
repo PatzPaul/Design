@@ -1,19 +1,17 @@
 # Recipe Dezigns :mage:
 A Recipe App built under react and flask
 
-### install dependencies for Backend
-<p>proceed to the backend directory on the terminal</p>
-<p>This will generate a Pipfile and a Pipfile.lock that has the required dependencies installed</p>
 
-```bash 
-pipenv install flask flask_restx flask_sqlalchemy flask_jwt_extended 
-```
 ## Running the Project 
 - For the `backend` and `frontend` set up and launch you can go through these steps.
 
 ### Backend
 - python version 3 recommended or higher
 - make sure pip3 is installed 
+- Install the necessary dependencies with requirements.txt
+```bash
+pip install -r requirements.txt
+```
 
 In the backend directory start a python virtual environment with the `pipenv command`.
 ```bash
@@ -82,7 +80,16 @@ webpack compiled successfully
 <br>
 
 ## Backend Setup
-- Exporting the main.py file as flask app in terminal
+
+### install dependencies for Backend
+<p>proceed to the backend directory on the terminal</p>
+<p>This will generate a Pipfile and a Pipfile.lock that has the required dependencies installed</p>
+
+```bash 
+pipenv install flask flask_restx flask_sqlalchemy flask_jwt_extended 
+```
+
+- Export the main.py file as flask app in terminal
 
 ```bash 
 export FLASK_APP=main.py
