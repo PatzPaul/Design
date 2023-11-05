@@ -14,6 +14,7 @@ from recipes import recipe_ns
 from auth import auth_ns
 from flask_cors import CORS
 
+
 def create_app(config):
     app = Flask(__name__)
     app.config.from_object(config)
@@ -21,7 +22,6 @@ def create_app(config):
     CORS(app)
 
     db.init_app(app)
-
 
     migrate = Migrate(app, db)
     JWTManager(app)
@@ -31,16 +31,12 @@ def create_app(config):
     api.add_namespace(recipe_ns)
     api.add_namespace(auth_ns)
 
-
-
-
     @app.shell_context_processor
     def make_shell_context():
         return {
             "db": db,
             "Recipe": Recipe,
-            "user":User
+            "user": User
         }
-
 
     return app
