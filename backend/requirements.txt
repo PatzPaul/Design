@@ -13,7 +13,7 @@ MarkupSafe==2.1.2
 PyJWT==2.6.0
 pyrsistent==0.19.3
 python-decouple==3.8
-python-dotenv==1.0.0
+# python-dotenv==1.0.0
 pytz==2023.3
 SQLAlchemy==2.0.9
 typing_extensions==4.5.0
