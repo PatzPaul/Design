@@ -57,7 +57,7 @@ const NavBar = () => {
       <div className="container-fluid">
         <img className="logo-container" src={hotDogIcon} alt="logo" />
         <Link className="navbar-brand" to="/">
-          Recipe-Tips
+          YummyRecipes
         </Link>
         <button
           className="navbar-toggler"
