@@ -30,9 +30,8 @@ class ProdConfig(Config):
     """
     Production environment configuration settings
     """
+    SQLALCHEMY_DATABASE_URI = config('DATABASE_URL', default='sqlite:///' + os.path.join(BASE_DIR, 'prod_db'))
 
-
-pass
 
 
 class TestConfig(Config):
