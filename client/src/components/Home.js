@@ -44,6 +44,15 @@ const LoggedInHome = () => {
 
   let token = localStorage.getItem("REACT_TOKEN_AUTH_KEY");
 
+  const getAllRecipes = () => {
+    fetch("/recipe/recipes")
+      .then((res) => res.json())
+      .then((data) => {
+        setRecipes(data);
+      })
+      .catch((err) => console.log(err));
+  };
+
   const updateRecipe = (data) => {
     console.log(data);
 

@@ -30,7 +30,13 @@ class ProdConfig(Config):
     """
     Production environment configuration settings
     """
-    SQLALCHEMY_DATABASE_URI = config('DATABASE_URL', default='sqlite:///' + os.path.join(BASE_DIR, 'prod_db'))
+    SQLALCHEMY_DATABASE_URI =  "sqlite:///" + os.path.join(BASE_DIR, 'dev_db')
+    DEBUG = config('DEBUG')
+    SQLALCHEMY_ECHO = config('ECHO')
+    SQLALCHEMY_TRACK_MODIFICATIONS = config(
+        'SQLALCHEMY_TRACK_MODIFICATIONS', cast=bool)
+
+
 
 
 

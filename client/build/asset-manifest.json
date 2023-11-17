@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "/static/css/main.1be14405.css",
+    "main.js": "/static/js/main.f38d1cca.js",
+    "static/media/cayenne-chicken-skewers.png": "/static/media/cayenne-chicken-skewers.406dbcd3d512f3bae239.png",
+    "static/media/Roast-Turkey-Recipe.png": "/static/media/Roast-Turkey-Recipe.c5d3af00fc647925b5a6.png",
+    "static/media/roasted-veg.png": "/static/media/roasted-veg.7e2817810d8a53dedc28.png",
+    "static/media/garlic-butter-fish.png": "/static/media/garlic-butter-fish.e556fb0aa780a2bac3c0.png",
+    "static/media/air-fryer-chicken.png": "/static/media/air-fryer-chicken.c5a74e6e03ef1f037dc3.png",
+    "index.html": "/index.html",
+    "main.1be14405.css.map": "/static/css/main.1be14405.css.map",
+    "main.f38d1cca.js.map": "/static/js/main.f38d1cca.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.1be14405.css",
+    "static/js/main.f38d1cca.js"
+  ]
+}
