@@ -1,11 +1,11 @@
 services:
-  - name: your-flask-app
+  - name: recipe-app
     env: python
     buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn -b 0.0.0.0:$PORT your_app_module:create_app()
+    startCommand: gunicorn -b 0.0.0.0:$PORT run:create_app()
     envVars:
       PYTHONUNBUFFERED: "1"
       FLASK_ENV: production
     routes:
       - path: /
-        command: python your_app_module.py
+        command: python run.py
