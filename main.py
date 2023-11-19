@@ -39,7 +39,6 @@ def create_app(config):
         return app.send_static_file("index.html")
 
     # model (serializer)
-
     @app.shell_context_processor
     def make_shell_context():
         return {"db": db, "Recipe": Recipe, "user": User}
