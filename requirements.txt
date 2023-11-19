@@ -41,3 +41,5 @@ virtualenv==20.23.1
 virtualenv-clone==0.5.7
 Werkzeug==2.2.3
 gunicorn==21.2.0
+flask-migrate==*
+flask-cors==*
