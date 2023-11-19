@@ -8,6 +8,7 @@ distlib==0.3.6
 filelock==3.12.2
 Flask==2.2.3
 Flask-Cors==4.0.0
+Flask-Migrate==2.0.2
 Flask-JWT-Extended==4.4.4
 flask-restx==1.1.0
 Flask-SQLAlchemy==3.0.3
@@ -41,5 +42,4 @@ virtualenv==20.23.1
 virtualenv-clone==0.5.7
 Werkzeug==2.2.3
 gunicorn==21.2.0
-flask-migrate==*
-flask-cors==*
+
